@@ -1,0 +1,38 @@
+name: login
+description: "A new Flutter project."
+
+# Para evitar la publicación accidental a pub.dev, si el paquete es privado
+publish_to: 'none' # Elimina esta línea si deseas publicar en pub.dev
+
+# Definición de versión y número de compilación
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.2.1
+  cupertino_icons: ^1.0.8
+  bs_flutter: ^0.4.7  # Usar la versión recomendada
+  flutter_animated_button: ^2.0.0 # Añadir este paquete
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Configuración de las fuentes personalizadas
+  fonts:
+    - family: RubikBubbles
+      fonts:
+        - asset: assets/fonts/RubikBubbles-Regular.ttf
+
+  # Declaración de la imagen en assets
+  assets:
+    - assets/images/goku.jpg
