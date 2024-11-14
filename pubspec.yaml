@@ -33,6 +33,7 @@ flutter:
       fonts:
         - asset: assets/fonts/RubikBubbles-Regular.ttf
 
-  # Declaración de la imagen en assets
+  # Declaración de las imágenes en assets
   assets:
     - assets/images/goku.jpg
+    - assets/images/futbol.jpg

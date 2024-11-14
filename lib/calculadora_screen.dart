@@ -108,7 +108,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> with SingleTicker
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora de Fútbol'),
+        title: Text('Calculadora Juan'),
         backgroundColor: Colors.teal[800],
       ),
       body: Stack(
@@ -116,7 +116,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> with SingleTicker
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.teal[900]!, Colors.teal[700]!],
+                colors: [const Color.fromARGB(255, 246, 243, 248)!, Colors.teal[700]!],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -131,7 +131,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> with SingleTicker
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
                     color: Colors.teal[50]!.withOpacity(0.9),
-                    border: Border.all(color: Colors.teal[800]!, width: 3),
+                    border: Border.all(color: const Color.fromARGB(255, 1, 5, 5)!, width: 3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   margin: EdgeInsets.all(20),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'apartado_botones.dart'; // Importa el archivo de ApartadoBotones
+import 'apartado_botones.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,26 +20,16 @@ class MyApp extends StatelessWidget {
             fontSize: 16,
             color: Colors.black,
           ),
-          bodyMedium: TextStyle(
-            fontFamily: 'RubikBubbles',
-            fontSize: 14,
-            color: Colors.black,
-          ),
           headlineLarge: TextStyle(
             fontFamily: 'RubikBubbles',
             fontSize: 32,
-            color: Colors.black,
-          ),
-          headlineMedium: TextStyle(
-            fontFamily: 'RubikBubbles',
-            fontSize: 28,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),
       home: LoginScreen(),
       routes: {
-        '/botones': (context) => ApartadoBotones(), // Define la ruta para ApartadoBotones
+        '/botones': (context) => ApartadoBotones(),
       },
     );
   }
@@ -54,95 +44,153 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'App con RubikBubbles',
-          style: TextStyle(
-            fontFamily: 'RubikBubbles',
-            fontSize: 24,
+      body: Stack(
+        children: [
+          // Fondo de imagen
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/futbol.jpg'),
+                fit: BoxFit.cover, // Hace que la imagen cubra toda la pantalla
+              ),
+            ),
           ),
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/goku.jpg', // Asegúrate de que la ruta sea correcta
-                height: 200,
-              ),
-              SizedBox(height: 20),
-
-              Text(
-                'Login de Juan Toaso',
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-
-              SizedBox(height: 40),
-
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Correo Electrónico',
-                  hintText: 'Ingresa tu correo',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email),
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 16),
-
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Contraseña',
-                  hintText: 'Ingresa tu contraseña',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
-                ),
-                obscureText: true,
-              ),
-              SizedBox(height: 24),
-
-              ElevatedButton(
-                onPressed: () {
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
-
-                  if (email.isEmpty || password.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Por favor, completa todos los campos')),
-                    );
-                  } else {
-                    // Navegar a ApartadoBotones si el inicio de sesión es exitoso
-                    Navigator.pushNamed(context, '/botones');
-                  }
-                },
-                child: Text('Iniciar Sesión'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  textStyle: TextStyle(fontFamily: 'RubikBubbles', fontSize: 18),
-                ),
-              ),
-              SizedBox(height: 16),
-
-              ElevatedButton(
-                onPressed: () {
-                  // Aquí puedes añadir la lógica para la navegación a la pantalla de registro
-                  print("Ir a la pantalla de registro");
-                },
-                child: Text('Regístrate'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  textStyle: TextStyle(fontFamily: 'RubikBubbles', fontSize: 18),
-                ),
-              ),
-            ],
+          
+          // Capa semi-transparente para mejorar la legibilidad
+          Container(
+            color: Colors.black.withOpacity(0.6), // Ajusta la opacidad para oscurecer el fondo
           ),
-        ),
+
+          // Contenido de la pantalla de login
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage('assets/images/goku.jpg'),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Login de Juan Toaso',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    SizedBox(height: 40),
+                    _buildTextField(
+                      controller: _emailController,
+                      label: 'Correo Electrónico',
+                      hintText: 'Ingresa tu correo',
+                      icon: Icons.email_outlined,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(height: 16),
+                    _buildTextField(
+                      controller: _passwordController,
+                      label: 'Contraseña',
+                      hintText: 'Ingresa tu contraseña',
+                      icon: Icons.lock_outline,
+                      obscureText: true,
+                    ),
+                    SizedBox(height: 24),
+                    _buildLoginButton(context),
+                    SizedBox(height: 16),
+                    _buildRegisterButton(context),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hintText,
+    required IconData icon,
+    TextInputType keyboardType = TextInputType.text,
+    bool obscureText = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.white),
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.white70),
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.2),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: Icon(icon, color: Colors.white),
+      ),
+      style: TextStyle(color: Colors.white),
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        String email = _emailController.text;
+        String password = _passwordController.text;
+
+        if (_validateInput(context, email, password)) {
+          Navigator.pushNamed(context, '/botones');
+        }
+      },
+      child: Text('Iniciar Sesión'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue.shade800,
+        foregroundColor: Colors.white,
+        minimumSize: Size(double.infinity, 50),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      ),
+    );
+  }
+
+  Widget _buildRegisterButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Funcionalidad de registro próximamente')),
+        );
+      },
+      child: Text('Regístrate'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue.shade500,
+        foregroundColor: Colors.white,
+        minimumSize: Size(double.infinity, 50),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      ),
+    );
+  }
+
+  bool _validateInput(BuildContext context, String email, String password) {
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Por favor, completa todos los campos')),
+      );
+      return false;
+    } else if (!_isValidEmail(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Por favor, ingresa un correo válido')),
+      );
+      return false;
+    }
+    return true;
+  }
+
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegex.hasMatch(email);
   }
 }

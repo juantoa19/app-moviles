@@ -7,13 +7,9 @@ class ApartadoBotones extends StatefulWidget {
 }
 
 class _ApartadoBotonesState extends State<ApartadoBotones> {
-  final bool_isHovered = false;
-  bool _isPressed = false;
-  bool _isPressedFade = false;
-  double _buttonSize = 50.0;
-  bool _isButtonClicked = false; // Estado para el botón de cambio de color
   int _selectedTimeIndex = 0; // Estado para el selector de tiempo
   int _selectedViewIndex = 0; // Estado para el selector de vista
+  double _sliderValue = 50.0; // Valor del slider
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +54,38 @@ class _ApartadoBotonesState extends State<ApartadoBotones> {
                 ],
               ),
             ),
-            
+
+            SizedBox(height: 20),
+
+            // Slider llamativo con animación
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.teal[100],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Text('Slider Llamativo'),
+                    Slider(
+                      value: _sliderValue,
+                      min: 0.0,
+                      max: 100.0,
+                      onChanged: (double newValue) {
+                        setState(() {
+                          _sliderValue = newValue;
+                        });
+                      },
+                    ),
+                    Text('Valor: ${_sliderValue.toStringAsFixed(2)}'),
+                  ],
+                ),
+              ),
+            ),
+
             SizedBox(height: 20),
 
             // Selector de vista (Individual / Grupal)
@@ -90,176 +117,44 @@ class _ApartadoBotonesState extends State<ApartadoBotones> {
 
             SizedBox(height: 20),
 
-            // Fila de botones con iconos comunes
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.home, size: 40, color: Colors.blue),
-                  onPressed: () {
-                    print('Botón Home presionado');
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.search, size: 40, color: Colors.green),
-                  onPressed: () {
-                    print('Botón Search presionado');
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.settings, size: 40, color: Colors.red),
-                  onPressed: () {
-                    print('Botón Settings presionado');
-                  },
-                ),
-              ],
-            ),
+           Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    IconButton(
+      icon: Icon(Icons.home, size: 40, color: Colors.blue),
+      onPressed: () {
+        print('Botón Home presionado');
+      },
+      iconSize: 40,
+    ),
+    SizedBox(width: 20),
+    IconButton(
+      icon: Icon(Icons.search, size: 40, color: Colors.green),
+      onPressed: () {
+        print('Botón Search presionado');
+      },
+      iconSize: 40,
+    ),
+    SizedBox(width: 20),
+    IconButton(
+      icon: Icon(Icons.settings, size: 40, color: Colors.red),
+      onPressed: () {
+        print('Botón Settings presionado');
+      },
+      iconSize: 40,
+    ),
+    SizedBox(width: 20), // Espacio entre los botones
+    IconButton(
+      icon: Icon(Icons.link, size: 40, color: Colors.purple),  // Icono de enlace
+      onPressed: () {
+        print('Botón Add Link presionado');
+      },
+      iconSize: 40,
+    ),
+  ],
+),
 
             SizedBox(height: 20),
-
-            // Nuevos botones con diferentes animaciones
-
-            // Botón con rotación
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTapDown: (_) {
-                  setState(() {
-                    _isPressed = true;
-                  });
-                },
-                onTapUp: (_) {
-                  setState(() {
-                    _isPressed = false;
-                  });
-                },
-                onTap: () {
-                  print("Botón con rotación presionado");
-                },
-                child: AnimatedRotation(
-                  turns: _isPressed ? 0.2 : 0.0,
-                  duration: Duration(milliseconds: 300),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF2C9CAF),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      'Botón Rotación',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Botón con fade
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTapDown: (_) {
-                  setState(() {
-                    _isPressedFade = true;
-                  });
-                },
-                onTapUp: (_) {
-                  setState(() {
-                    _isPressedFade = false;
-                  });
-                },
-                onTap: () {
-                  print("Botón Fade presionado");
-                },
-                child: AnimatedOpacity(
-                  opacity: _isPressedFade ? 0.5 : 1.0,
-                  duration: Duration(milliseconds: 300),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 16, 192, 54),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      'Botón Fade',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Botón de expansión
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTapDown: (_) {
-                  setState(() {
-                    _buttonSize = 70.0; // Expansión al presionar
-                  });
-                },
-                onTapUp: (_) {
-                  setState(() {
-                    _buttonSize = 50.0; // Vuelve a su tamaño original
-                  });
-                },
-                onTap: () {
-                  print("Botón Expansión presionado");
-                },
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  width: _buttonSize,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 233, 73, 73),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Botón Expansión',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            // Botón con animación de cambio de color al presionar
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTapDown: (_) {
-                  setState(() {
-                    _isButtonClicked = true; // Cambio de color al presionar
-                  });
-                },
-                onTapUp: (_) {
-                  setState(() {
-                    _isButtonClicked = false; // Vuelve al color original
-                  });
-                },
-                onTap: () {
-                  print("Botón con cambio de color presionado");
-                },
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  width: 200,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: _isButtonClicked ? Colors.deepOrange : Colors.blue,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Botón Cambio de Color',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                ),
-              ),
-            ),
 
             // Botón de calculadora
             Padding(
@@ -277,6 +172,13 @@ class _ApartadoBotonesState extends State<ApartadoBotones> {
                   decoration: BoxDecoration(
                     color: Colors.teal,
                     borderRadius: BorderRadius.circular(5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                      ),
+                    ],
                   ),
                   child: Text(
                     'Calculadora',
@@ -289,16 +191,16 @@ class _ApartadoBotonesState extends State<ApartadoBotones> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.teal[600],
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: Icon(Icons.home, size: 30, color: Colors.white),
-              onPressed: () {
-                print("Home button pressed");
-              },
-            ),
+  color: const Color.fromARGB(255, 72, 154, 221), // Cambia este valor por el color que desees
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      IconButton(
+        icon: Icon(Icons.home, size: 30, color: Colors.white),
+        onPressed: () {
+          print("Home button pressed");
+        },
+      ),
             IconButton(
               icon: Icon(Icons.settings, size: 30, color: Colors.white),
               onPressed: () {
@@ -309,6 +211,18 @@ class _ApartadoBotonesState extends State<ApartadoBotones> {
               icon: Icon(Icons.help, size: 30, color: Colors.white),
               onPressed: () {
                 print("Help button pressed");
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.contact_mail, size: 30, color: Colors.white),
+              onPressed: () {
+                print("Contact button pressed");
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.info, size: 30, color: Colors.white),
+              onPressed: () {
+                print("Info button pressed");
               },
             ),
           ],
