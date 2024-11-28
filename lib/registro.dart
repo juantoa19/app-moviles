@@ -1,52 +1,18 @@
 import 'package:flutter/material.dart';
-import 'registro.dart'; // Importa tu archivo registro.dart
 
-void main() {
-  runApp(MyApp());
-}
+class RegistroScreen extends StatelessWidget {
+  RegistroScreen({Key? key}) : super(key: key);
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter App con RubikBubbles y Goku',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(
-            fontFamily: 'RubikBubbles',
-            fontSize: 16,
-            color: Colors.black,
-          ),
-          headlineLarge: TextStyle(
-            fontFamily: 'RubikBubbles',
-            fontSize: 32,
-            color: Colors.white,
-          ),
-        ),
-      ),
-      home: LoginScreen(),
-      routes: {
-        '/registro': (context) => RegistroScreen(),
-      },
-    );
-  }
-}
-
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Fondo de imagen
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -55,11 +21,9 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Capa semi-transparente
           Container(
             color: Colors.black.withOpacity(0.6),
           ),
-          // Contenido principal
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -73,10 +37,17 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Login',
+                      'Registro',
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     SizedBox(height: 40),
+                    _buildTextField(
+                      controller: _nameController,
+                      label: 'Nombre',
+                      hintText: 'Ingresa tu nombre',
+                      icon: Icons.person_outline,
+                    ),
+                    SizedBox(height: 16),
                     _buildTextField(
                       controller: _emailController,
                       label: 'Correo Electrónico',
@@ -88,14 +59,22 @@ class LoginScreen extends StatelessWidget {
                     _buildTextField(
                       controller: _passwordController,
                       label: 'Contraseña',
-                      hintText: 'Ingresa tu contraseña',
+                      hintText: 'Crea una contraseña',
+                      icon: Icons.lock_outline,
+                      obscureText: true,
+                    ),
+                    SizedBox(height: 16),
+                    _buildTextField(
+                      controller: _confirmPasswordController,
+                      label: 'Confirmar Contraseña',
+                      hintText: 'Repite tu contraseña',
                       icon: Icons.lock_outline,
                       obscureText: true,
                     ),
                     SizedBox(height: 24),
-                    _buildLoginButton(context),
-                    SizedBox(height: 16),
                     _buildRegisterButton(context),
+                    SizedBox(height: 16),
+                    _buildBackButton(context),
                   ],
                 ),
               ),
@@ -135,14 +114,16 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(BuildContext context) {
+  Widget _buildRegisterButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/botones'); // Navega al apartado de botones
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Usuario registrado exitosamente')),
+        );
       },
-      child: Text('Iniciar Sesión'),
+      child: Text('Registrarse'),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green.shade800,
+        backgroundColor: Colors.blue.shade800,
         foregroundColor: Colors.white,
         minimumSize: Size(double.infinity, 50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -150,14 +131,14 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRegisterButton(BuildContext context) {
+  Widget _buildBackButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/registro'); // Navega al registro
+        Navigator.pop(context); // Regresa al login
       },
-      child: Text('Registrarse'),
+      child: Text('Salir'),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue.shade800,
+        backgroundColor: Colors.red.shade600,
         foregroundColor: Colors.white,
         minimumSize: Size(double.infinity, 50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
